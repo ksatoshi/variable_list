@@ -57,3 +57,52 @@ void add_element_on_anywhere(data *top,int index,int value){
 
     return;
 }
+
+// リストの長さを取得する関数
+int get_list_length(data *top){
+    data *cursor = top;
+    int length;
+    for(length = 1;cursor->next != NULL;length++);
+
+    return length;
+}
+
+// 指定のindexのデータを取得する関数
+int get_data_with_index(data *top,int index){
+    data *cursor = top;
+    for(int i = 0;i<index;i++){
+        cursor = cursor->next;
+    }
+
+    return cursor->value;
+}
+
+// リストを開放する関数
+void free_list(data *tail){
+    data *cursor = tail->before;
+
+    while(cursor->before != NULL){
+        free(cursor->next);
+        cursor = cursor->before;
+    }
+
+    free(cursor);
+
+    return;
+}
+
+// 特定のインデックスのデータを削除する関数
+ void remove_with_index(data* top,int index){
+    data *cursor;
+    data *before,*next;
+    for(int i = 0;i<index;i++) cursor = cursor->next;
+    before = cursor->before;
+    next = cursor->next;
+
+    before->next = next;
+    next->before = before;
+
+    free(cursor);
+
+    return;
+ }
